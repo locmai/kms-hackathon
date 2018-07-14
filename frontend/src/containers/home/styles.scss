@@ -1,3 +1,38 @@
+
+@mixin animated($duration) {
+  animation-duration: $duration;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@mixin fadeInUp {
+  animation-name: fadeInUp;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin fadeIn {
+  animation-name: fadeIn;
+}
+
 %messageText {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -9,6 +44,19 @@
   position: relative;
   padding: 10px 20px;
   border-radius: 20px;
+  margin-top: 5px;
+  @include animated(0.6s);
+  @include fadeInUp;
+}
+
+@mixin button($background-color) {
+  background-color: $background-color;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  &:hover {
+    background-color: darken($background-color, 8);
+  }
 }
 
 .chatbox-container {
@@ -17,24 +65,53 @@
   flex-direction: column;
   width: 320px;
   margin: auto;
-  height: 250px;
+  height: 280px;
+  opacity: 0.8;
   .message-input {
+    margin-top: 10px;
     padding: 10px 20px;
     background: white;
     border-radius: 20px;
+    min-height: 40px;
+    @include animated(0.6s);
+    @include fadeIn;
     .textarea {
       font-size: 16px;
     }
   }
   .chatbox-body {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    overflow: auto;
+    // padding: 15px;
+    & > div:first-child {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      padding: 15px;
+    }
+    .multichoice-container {
+      margin: 20px auto;
+      @include animated(0.6s);
+      @include fadeInUp;
+      .yes-button {
+        @include button(#7ed321);
+        margin-right: 10px;
+      }
+      .no-button {
+        @include button(#e05d5d)
+        // background-color: #e05d5d;
+        // color: white;
+        // border: none;
+        // border-radius: 3px;
+        // &:hover {
+        //   background-color: darken(#e05d5d, 8);
+        // }
+      }
+    }
     .admin {
       @extend %messageText;
       color:white; 
       background:#0B93F6;
-      align-self: flex-end;
+      align-self: flex-start;
       // &:before {
       //   content:"";
       //   position:absolute;
@@ -64,7 +141,7 @@
       @extend %messageText;
       background:#E5E5EA;
       color: black;
-      align-self: flex-start;
+      align-self: flex-end;
       // &:before {
       //   content:"";
       //   position: absolute;

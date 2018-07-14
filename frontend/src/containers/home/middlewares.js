@@ -1,6 +1,9 @@
-import { getAllQuestions } from './actions'
+import { getAllQuestions, sendMessage } from './actions'
 
-import { getAllQuestions as getAllQuestionsRequest } from '../../services/homeApi'
+import { 
+  getAllQuestions as getAllQuestionsRequest,
+  sendMessage as sendMessageRequest,
+ } from '../../services/homeApi'
 
 export const onGetAllQuestions = () => {
   return dispatch => {
@@ -15,6 +18,25 @@ export const onGetAllQuestions = () => {
           dispatch(getAllQuestions.done(data))
         } else {
           dispatch(getAllQuestions.error({}))
+        }
+      })
+  }
+}
+
+export const onSendMessage = (message) => {
+  return dispatch => {
+    dispatch(sendMessage(message))
+    return sendMessageRequest({ message: message })
+      .then(res => {
+        // console.log('abc', res)
+        return res.json()
+      })
+      .then(data => {
+        if (data) {
+          console.log('hihi', data)
+          dispatch(sendMessage.done(data))
+        } else {
+          dispatch(sendMessage.error({}))
         }
       })
   }
