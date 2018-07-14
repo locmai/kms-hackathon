@@ -65,7 +65,8 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 320px;
+  min-width: 320px;
+  width: 35%;
   margin: auto;
   height: 300px;
   opacity: 0.85;
@@ -93,7 +94,7 @@
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
-      padding: 15px;
+      padding: 0 15px;
     }
     .progress {
       align-self: center;
