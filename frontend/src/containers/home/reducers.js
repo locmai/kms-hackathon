@@ -7,31 +7,38 @@ import {
 
 const initState = {
   messages: [],
+  isLoadingMessages: false,
 }
 
 const homeReducers = handleActions(
   {
     [getAllQuestions]: (state, action) => {
-      return initState
+      return {
+        ...initState,
+        isLoadingMessages: true,
+      }
     },
     [getAllQuestions.done]: (state, action) => {
       return {
         ...initState,
         messages: [...state.messages, action.payload],
+        isLoadingMessages: false,
       }
     },
     [getAllQuestions.error]: (state, action) => {
       return initState
     },
-    // [sendMessage]: (state, action) => {
-    //   return initState
-    // },
-    [sendMessage.done]: (state, action) => {
-      const { may_vua_moi_send } = action.payload
-      console.log('abc', action.payload)
+    [sendMessage]: (state, action) => {
+      const { message } = action.payload
       return {
         ...initState,
-        messages: [...state.messages, may_vua_moi_send],
+        messages: [...state.messages, message],
+      }
+    },
+    [sendMessage.done]: (state, action) => {
+      return {
+        ...initState,
+        messages: [...state.messages, action.payload],
       }
     },
   },

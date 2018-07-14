@@ -23,17 +23,16 @@ export const onGetAllQuestions = () => {
   }
 }
 
-export const onSendMessage = (message) => {
+export const onSendMessage = (msg) => {
   return dispatch => {
-    dispatch(sendMessage(message))
-    return sendMessageRequest({ message: message })
+    dispatch(sendMessage(msg))
+    return sendMessageRequest({ message: msg.message })
       .then(res => {
         // console.log('abc', res)
         return res.json()
       })
       .then(data => {
         if (data) {
-          console.log('hihi', data)
           dispatch(sendMessage.done(data))
         } else {
           dispatch(sendMessage.error({}))

@@ -5,8 +5,8 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <div>
-        header
+      <div className='header'>
+        Trả lời ngay nhận ngay việc làm
       </div>
     )
   }

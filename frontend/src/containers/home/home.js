@@ -5,7 +5,9 @@ import { bindActionCreators } from 'redux'
 import './styles.scss'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { Scrollbars } from 'react-custom-scrollbars'
+import ScrollAnimation from 'react-animate-on-scroll'
 
 class Home extends React.Component {
   state = {
@@ -60,11 +62,28 @@ class Home extends React.Component {
 
   render() {
     const { message } = this.state
-    const { messages } = this.props
+    const { messages, isLoadingMessages } = this.props
+    let isYesNoQuestion = false
+    let isPredicted = false
+    const hasMessage = messages && messages.length > 0
+    const hasLastMessage = hasMessage && messages[messages.length - 1]
+    const isConsultMessage = messages.length > 0 && messages[messages.length - 1].answers && messages[messages.length - 1].answers.length > 0
+    const isHasChoice = hasMessage && isConsultMessage
+    const isStillAskQuestion = hasLastMessage && isHasChoice
+    const isDonePredicted = messages &&
+      messages.length > 0 &&
+      messages[messages.length - 1] && messages[messages.length - 1].predict
+    if (isStillAskQuestion) {
+      isYesNoQuestion = true
+    }
+    if (isDonePredicted) {
+      isPredicted = true
+    }
+
     return (
       <div className='chatbox-container'>
         <Scrollbars className='chatbox-body' autoHide={true} ref={(c) => this.scrollbars = c}>
-          {messages && messages.length > 0 &&
+          {messages && messages.length > 0 && (
             <React.Fragment>
               {messages.map((message, index) =>
                 (
@@ -82,40 +101,51 @@ class Home extends React.Component {
                       )
                     }
                     {/* <div className='user'>
-                    Hello
-                    </div> */}
+                  Hello
+                  </div> */}
                   </React.Fragment>
                 ))
               }
-              {messages[messages.length - 1].type === 'multiple_choice' && (
-                <div className='multichoice-container'>
-                  <Button variant='outlined' size='medium' className='yes-button' onClick={() => this.onClickMultiChoiceButton('Yes')}>
-                    Yes
+              {isYesNoQuestion && (
+                <div className='button-groups'>
+                  <Button variant='outlined' size='medium' className='success-button' onClick={() => this.onClickMultiChoiceButton(messages[messages.length - 1].answers[0])}>
+                    {messages[messages.length - 1].answers[0]}
                   </Button>
-                  <Button variant='outlined' size='medium' className='no-button' onClick={() => this.onClickMultiChoiceButton('No')}>
-                    No
+                  <Button variant='outlined' size='medium' className='failure-button' onClick={() => this.onClickMultiChoiceButton(messages[messages.length - 1].answers[1])}>
+                    {messages[messages.length - 1].answers[1]}
+                  </Button>
+                </div>
+              )}
+              {isPredicted && (
+                <div className='button-groups'>
+                  <Button variant='outlined' size='medium' className='success-button' onClick={() => { }}>
+                    Xem danh sách
                   </Button>
                 </div>
               )}
             </React.Fragment>
-          }
+          )}
+          {isLoadingMessages && <CircularProgress className={'progress'} />}
         </Scrollbars>
 
-        <Input
-          id='message-input'
-          // label='Type'
-          className={'message-input'}
-          value={message}
-          onChange={this.handleChange('message')}
-          // margin='normal'
-          placeholder='Type a message'
-          disableUnderline={true}
-          multiline={true}
-          rows={1}
-          rowsMax={3}
-          autoFocus={true}
-          onKeyPress={e => this.onDetectEnterKey(e, message)}
-        />
+        {!isLoadingMessages && (
+          <Input
+            id='message-input'
+            // label='Type'
+            className={'message-input'}
+            value={message}
+            onChange={this.handleChange('message')}
+            // margin='normal'
+            placeholder={isYesNoQuestion || isPredicted ? 'Xin hãy bấm chọn' : 'Nhập câu trả lời'}
+            disableUnderline={true}
+            multiline={true}
+            rows={1}
+            disabled={isYesNoQuestion || isPredicted}
+            rowsMax={4}
+            autoFocus={true}
+            onKeyPress={e => this.onDetectEnterKey(e, message)}
+          />
+        )}
       </div>
     )
   }
@@ -124,6 +154,7 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
   return {
     messages: state.homeReducers.messages,
+    isLoadingMessages: state.homeReducers.isLoadingMessages,
     // successMessage: state.account.successMessage,
     // isFetching: state.account.isFetching,
   }

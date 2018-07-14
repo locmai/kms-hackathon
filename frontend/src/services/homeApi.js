@@ -1,6 +1,7 @@
-const URL = 'http://127.0.0.1:5000/api'
+const URL = 'http://192.168.33.70:5000/api'
 export const getAllQuestions = () => {
-  return fetch(`${URL}/question`, {
+  console.log("greeting")
+  return fetch(`${URL}/question/greeting`, {
     method: 'GET',
     // body: JSON.stringify(body),
     headers: {
@@ -10,6 +11,7 @@ export const getAllQuestions = () => {
 }
 
 export const sendMessage = (body) => {
+  console.log("send message", body)
   return fetch(`${URL}/question`, {
     method: 'POST', // or 'PUT'
     headers: {

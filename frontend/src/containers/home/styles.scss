@@ -54,6 +54,8 @@
   color: #fff;
   border: none;
   border-radius: 3px;
+  text-transform: initial;
+  font-size: 16px;
   &:hover {
     background-color: darken($background-color, 8);
   }
@@ -65,18 +67,23 @@
   flex-direction: column;
   width: 320px;
   margin: auto;
-  height: 280px;
-  opacity: 0.8;
+  height: 300px;
+  opacity: 0.85;
   .message-input {
+    overflow: hidden;
     margin-top: 10px;
     padding: 10px 20px;
-    background: white;
+    background: #fff;
     border-radius: 20px;
     min-height: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     @include animated(0.6s);
     @include fadeIn;
-    .textarea {
-      font-size: 16px;
+    textarea {
+      font-size: 19px;
+      line-height: 19px;
+      overflow: hidden;
+      transition: 0.5s;
     }
   }
   .chatbox-body {
@@ -88,15 +95,18 @@
       flex-direction: column;
       padding: 15px;
     }
-    .multichoice-container {
+    .progress {
+      align-self: center;
+    }
+    .button-groups {
       margin: 20px auto;
       @include animated(0.6s);
       @include fadeInUp;
-      .yes-button {
+      .success-button {
         @include button(#7ed321);
         margin-right: 10px;
       }
-      .no-button {
+      .failure-button {
         @include button(#e05d5d)
         // background-color: #e05d5d;
         // color: white;
@@ -109,9 +119,10 @@
     }
     .admin {
       @extend %messageText;
-      color:white; 
-      background:#0B93F6;
+      color:#fff; 
+      background: #0B93F6;
       align-self: flex-start;
+      border-radius: 20px 20px 20px 2px;
       // &:before {
       //   content:"";
       //   position:absolute;
@@ -139,7 +150,8 @@
     }
     .user {
       @extend %messageText;
-      background:#E5E5EA;
+      border-radius: 20px 20px 2px;
+      background: #E5E5EA;
       color: black;
       align-self: flex-end;
       // &:before {
