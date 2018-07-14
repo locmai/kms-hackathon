@@ -9,7 +9,7 @@ import {
 export const onGetAllQuestions = () => {
   return (dispatch) => {
     // dispatch(getAllQuestions())
-    return fetch('https://c8c2d869.ngrok.io/api/question', {
+    return fetch('http://127.0.0.1:5000/api/question', {
       method: 'GET',
       // body: JSON.stringify(body),
       headers: {
@@ -18,7 +18,7 @@ export const onGetAllQuestions = () => {
     })
       .then(res => {
         console.log('abc', res)
-        res.json()
+        //res.json()
       })
       .then((data) => {
         console.log('abc', data)
