@@ -1,0 +1,91 @@
+%messageText {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-line;
+  width: fit-content;
+  max-width: 70%;
+  font-size: 16px;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.chatbox-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 320px;
+  margin: auto;
+  height: 250px;
+  .message-input {
+    padding: 10px 20px;
+    background: white;
+    border-radius: 20px;
+  }
+  .chatbox-body {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    .admin {
+      @extend %messageText;
+      color:white; 
+      background:#0B93F6;
+      align-self: flex-end;
+      // &:before {
+      //   content:"";
+      //   position:absolute;
+      //   z-index:-1;
+      //   bottom:-2px;
+      //   right:-7px;
+      //   height:20px;
+      //   border-right:20px solid #0B93F6;
+      //   border-bottom-left-radius: 16px 16px;
+      //   -webkit-transform:translate(0, -2px);
+      // }
+    
+      // &:after {
+      //   content:"";
+      //   position:absolute;
+      //   z-index:1;
+      //   bottom:-2px;
+      //   right:-56px;
+      //   width:26px;
+      //   height:20px;
+      //   background:white;
+      //   border-bottom-left-radius: 10px;
+      //   -webkit-transform:translate(-30px, -2px);
+      // }
+    }
+    .user {
+      @extend %messageText;
+      background:#E5E5EA;
+      color: black;
+      align-self: flex-start;
+      // &:before {
+      //   content:"";
+      //   position: absolute;
+      //   z-index: 2;
+      //   bottom: -2px;
+      //   left :-7px;
+      //   height: 20px;
+      //   border-left: 20px solid #E5E5EA;
+      //   border-bottom-right-radius: 16px 16px;
+      //   -webkit-transform: translate(0, -2px);
+      // }
+    
+      // &:after {
+      //   content:"";
+      //   position:absolute;
+      //   z-index:3;
+      //   bottom:-2px;
+      //   left:4px;
+      //   width:26px;
+      //   height:20px;
+      //   background:white;
+      //   border-bottom-right-radius: 10px;
+      //   -webkit-transform:translate(-30px, -2px);
+      // }
+    }
+  }
+}
