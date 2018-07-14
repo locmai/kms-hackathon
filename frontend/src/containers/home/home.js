@@ -7,7 +7,6 @@ import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Scrollbars } from 'react-custom-scrollbars'
-import ScrollAnimation from 'react-animate-on-scroll'
 
 class Home extends React.Component {
   state = {
