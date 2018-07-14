@@ -1,0 +1,3 @@
+INIT_MESSAGE = {
+
+}
