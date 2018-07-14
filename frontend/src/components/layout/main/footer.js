@@ -5,8 +5,8 @@ export default class Footer extends React.Component {
 
   render() {
     return (
-      <div>
-        footer
+      <div className='footer'>
+        © All right reserved by Infection
       </div>
     )
   }
