@@ -22,15 +22,17 @@ class Home extends React.Component {
 
   render() {
     const { message } = this.state
+    const { question } = this.props
+    console.log('haha', question)
     return (
       <div className='chatbox-container'>
         <div className='chatbox-body'>
           <div className='admin'>
-            Hi
-        </div>
+            {question.message}
+          </div>
           <div className='user'>
             Hello
-        </div>
+          </div>
         </div>
 
         <Input
@@ -54,7 +56,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    // errorMessage: state.account.errorMessage,
+    question: state.homeReducers.question,
     // successMessage: state.account.successMessage,
     // isFetching: state.account.isFetching,
   }

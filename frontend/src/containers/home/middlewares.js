@@ -12,7 +12,6 @@ export const onGetAllQuestions = () => {
       })
       .then(data => {
         if (data) {
-          console.log('abc', data)
           dispatch(getAllQuestions.done(data))
         } else {
           dispatch(getAllQuestions.error({}))

@@ -4,9 +4,9 @@ import {
   getAllQuestions,
 } from './actions'
 
-const initState = fromJS({
+const initState = {
   question: {},
-})
+}
 
 const homeReducers = handleActions(
   {
@@ -14,11 +14,10 @@ const homeReducers = handleActions(
       return initState
     },
     [getAllQuestions.done]: (state, action) => {
-      // const { answer, message, type } = this.action
-      console.log('hihi', action.payload)
-      return state.merge({
-        question: this.action,
-      })
+      return {
+        ...initState,
+        question: action.payload,
+      }
     },
     [getAllQuestions.error]: (state, action) => {
       return initState
