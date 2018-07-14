@@ -1,13 +1,9 @@
-import {
-  getAllQuestions
-} from './actions'
+import { getAllQuestions } from './actions';
 
-import {
-  getAllQuestions as getAllQuestionsRequest,
-} from '../../services/homeApi'
+import { getAllQuestions as getAllQuestionsRequest } from '../../services/homeApi';
 
 export const onGetAllQuestions = () => {
-  return (dispatch) => {
+  return dispatch => {
     // dispatch(getAllQuestions())
     return fetch('http://127.0.0.1:5000/api/question', {
       method: 'GET',
@@ -17,11 +13,11 @@ export const onGetAllQuestions = () => {
       }
     })
       .then(res => {
-        console.log('abc', res)
-        //res.json()
+        console.log('abc', res);
+        return res.json();
       })
-      .then((data) => {
-        console.log('abc', data)
-      })
-  }
-}
+      .then(data => {
+        console.log('abc', data);
+      });
+  };
+};
