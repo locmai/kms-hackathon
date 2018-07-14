@@ -1,26 +1,39 @@
-const URL = 'http://192.168.33.70:5000/api'
+const URL = 'http://192.168.33.70:5000/api';
 export const getAllQuestions = () => {
-  console.log("greeting")
+  console.log('greeting');
   return fetch(`${URL}/question/greeting`, {
     method: 'GET',
     // body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-}
+  });
+};
 
-export const sendMessage = (body) => {
-  console.log("send message", body)
+export const sendMessage = body => {
+  console.log('send message', body);
   return fetch(`${URL}/question`, {
     method: 'POST', // or 'PUT'
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body), 
-  })
-}
+    body: JSON.stringify(body)
+  });
+};
 
+export const sendAudioFile = audio => {
+  console.log('send message', audio);
+  let formData = new FormData();
+  formData.append('audioFile', audio);
+  formData.append('fileName', 'AudioSample.raw');
+  return fetch(`${URL}/audio`, {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: formData
+  });
+};
 // const sendInitialMessgae = async () => {
 //   let resp = {}
 //   try {
