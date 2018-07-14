@@ -5,20 +5,26 @@ import {
 } from './actions'
 
 const initState = fromJS({
-  conversationsList: [],
+  question: {},
 })
 
-export const BotConversationsReducers = handleActions(
+const homeReducers = handleActions(
   {
     [getAllQuestions]: (state, action) => {
       return initState
     },
     [getAllQuestions.done]: (state, action) => {
-      return initState
+      // const { answer, message, type } = this.action
+      console.log('hihi', action.payload)
+      return state.merge({
+        question: this.action,
+      })
     },
-    [getAllQuestions]: (state, action) => {
+    [getAllQuestions.error]: (state, action) => {
       return initState
     },
   },
   initState,
 )
+
+export default homeReducers

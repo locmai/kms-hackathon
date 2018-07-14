@@ -8,18 +8,17 @@ import ReduxThunkMiddleware from 'redux-thunk'
 import { MainLayout } from './components/layout/main'
 import { Home } from './containers/home'
 // import AppRoute from './app/index.js'
+import homeReducers from './containers/home/reducers'
 
 import { combineReducers } from 'redux'
 
 const Reducers = combineReducers({
-
+  homeReducers,
 })
 
 const store = createStore(
   Reducers,
-  applyMiddleware(
-    ReduxThunkMiddleware
-  )
+  applyMiddleware(ReduxThunkMiddleware)
 )
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
@@ -35,7 +34,6 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 
 const App = props => (
   <Provider store={store}>
-
     <BrowserRouter>
       <Switch>
         <AppRoute exact={true} path="/" layout={MainLayout} component={Home} />
@@ -43,7 +41,6 @@ const App = props => (
         <Redirect to='/' />
       </Switch>
     </BrowserRouter>
-
   </Provider>
 )
 
