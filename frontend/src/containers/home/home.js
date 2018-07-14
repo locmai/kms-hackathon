@@ -38,6 +38,7 @@ export default class Home extends React.Component {
           multiline={true}
           rows={1}
           rowsMax={3}
+          autoFocus={true}
         />
       </div>
     )
