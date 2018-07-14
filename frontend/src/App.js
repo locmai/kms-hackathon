@@ -1,21 +1,51 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import HomeReducers from './containers/home'
+// import { AppContainer } from 'react-hot-loader'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import ReduxThunkMiddleware from 'redux-thunk'
+import { MainLayout } from './components/layout/main'
+import { Home } from './containers/home'
+// import AppRoute from './app/index.js'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import { combineReducers } from 'redux'
 
-export default App;
+const Reducers = combineReducers({
+
+})
+
+const store = createStore(
+  Reducers,
+  applyMiddleware(
+    ReduxThunkMiddleware
+  )
+)
+
+const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      <Layout>
+        <Component {...props} />
+      </Layout>
+    )}
+  />
+)
+
+const App = props => (
+  <Provider store={store}>
+
+    <BrowserRouter>
+      <Switch>
+        <AppRoute exact={true} path="/" layout={MainLayout} component={Home} />
+        {/* <Route path='/verify/:key' component={VerifyEmailByGoogleAuthContainer} /> */}
+        <Redirect to='/' />
+      </Switch>
+    </BrowserRouter>
+
+  </Provider>
+)
+
+export default App
