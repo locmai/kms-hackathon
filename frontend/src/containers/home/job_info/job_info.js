@@ -53,6 +53,11 @@ class JobInfo extends React.Component {
   render() {
     const { classes, job, index } = this.props
     // console.log('abc', job)
+    let field = ''
+    field = job.field && job.field.map((field, index) => <div key={index}>{field}</div>)
+    console.log('field', field)
+    let skill = ''
+    skill = job.skill && job.skill.map((skill, index) => <div key={index}>{skill}</div>)
     return (
       <Card className='job-container'>
         <CardHeader
@@ -66,8 +71,8 @@ class JobInfo extends React.Component {
           //     <MoreVertIcon />
           //   </IconButton>
           // }
-          title='Shrimp and Chorizo Paella'
-          subheader='September 14, 2016'
+          title={field}
+          subheader={skill}
         />
         <CardMedia
           className={classes.media}
@@ -98,11 +103,11 @@ class JobInfo extends React.Component {
                 Benefit: {job.benefit}
               </Typography>
             )}
-            {job.skills && (
+            {/* {job.skills && (
               <Typography paragraph>
                 Skills: {job.skills}
               </Typography>
-            )}
+            )} */}
             {job.requirement && (
               <Typography paragraph>
                 Requirement: {job.requirement}

@@ -40,7 +40,12 @@ const chatboxReducers = handleActions(
       return initState
     },
     [sendMessage]: (state, action) => {
-      const { message } = action.payload
+      let { message } = action.payload
+      let root = []
+      if (state.messages) {
+        root = state.messages[state.messages.length - 1].root ? state.messages[state.messages.length - 1].root : []
+      }
+      message = {...message, root}
       return {
         ...initState,
         messages: [...state.messages, message],

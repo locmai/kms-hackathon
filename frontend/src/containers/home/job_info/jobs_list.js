@@ -11,17 +11,17 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 class JobsList extends React.Component {
   state = { expanded: false }
 
-  componentDidMount() {
-    console.log('sax')
-    this.props.actions.getJobsList()
-  }
+  // componentDidMount() {
+  //   console.log('sax')
+  //   this.props.actions.getJobsList()
+  // }
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }))
   }
 
   render() {
-    const { jobsList, isLoadingJobs } = this.props
+    const { messages } = this.props
     // const jobsList = [
     //   { description: 'abc', skill: 'abc' },
     //   { description: 'abc', skill: 'abc' },
@@ -31,13 +31,16 @@ class JobsList extends React.Component {
     //   { description: 'abc', skill: 'abc' },
     //   { description: 'abc', skill: 'abc' },
     // ]
+    // if (messages) {
+    //   console.log('messages hihi', messages.)
+    // }
     return (
       <div className='jobs-list-container'>
       {/* // <Scrollbars className='jobs-list-container' autoHide={true}> */}
-        {jobsList && jobsList.length > 0 &&
-          jobsList.map((job, index) => <JobInfo key={index} index={index} job={job} />)
+        {messages && messages.length > 0 &&
+          messages[messages.length - 1].map((job, index) => <JobInfo key={index} index={index} job={job} />)
         }
-        {isLoadingJobs && <CircularProgress className={'progress'} />}
+        {/* {isLoadingJobs && <CircularProgress className={'progress'} />} */}
         {/* // </Scrollbars> */}
       </div>
     )
@@ -46,6 +49,7 @@ class JobsList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    messages: state.chatboxReducers.messages,
     jobsList: state.jobsReducers.jobsList,
     isLoadingJobs: state.jobsReducers.isLoadingJobs,
   }

@@ -96,6 +96,7 @@ class Home extends React.Component {
     let isYesNoQuestion = false
     let isPredicted = false
     let isUploadMessage = false
+    let hasNoMessage = false
     const hasMessage = messages && messages.length > 0
     const hasLastMessage = hasMessage && messages[messages.length - 1]
     const isConsultMessage = messages.length > 0 && messages[messages.length - 1].answers && messages[messages.length - 1].answers.length > 0
@@ -113,7 +114,9 @@ class Home extends React.Component {
     if (hasMessage && messages[messages.length - 1].message === 'Hãy tải CV của bạn lên') {
       isUploadMessage = true
     }
-
+    if (hasMessage && !messages[messages.length - 1].message && !messages[messages.length - 1].answers) {
+      hasNoMessage = true
+    }
     if (messages) {
       console.log('message', messages)
     }
@@ -128,7 +131,7 @@ class Home extends React.Component {
                     {!message.isFromUser
                       ? (
                         <div className='admin'>
-                          {message.message}
+                          {message.message ? message.message : 'Mời bạn xem kết quả'}
                         </div>
                       )
                       : (
@@ -150,7 +153,7 @@ class Home extends React.Component {
                   </Button>
                 </div>
               )}
-              {isPredicted && (
+              {hasNoMessage && (
                 <div className='button-groups'>
                   <Button variant='outlined' size='medium' className='success-button' onClick={() => actions.switchToJobsList(messages[messages.length - 1].jobs)}>
                     Xem danh sách
@@ -172,8 +175,7 @@ class Home extends React.Component {
                   onChange={event => this.handleUploadFile(event)}
                 />
                 </React.Fragment>
-              )
-              }
+              )}
             </React.Fragment>
           )}
           {isLoadingMessages && <CircularProgress className={'progress'} />}
