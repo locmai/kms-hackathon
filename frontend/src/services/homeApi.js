@@ -26,7 +26,7 @@ export const sendAudioFile = audio => {
   let formData = new FormData();
   formData.append('audioFile', audio);
   formData.append('fileName', 'AudioSample.raw');
-  return fetch(`${URL}/audio`, {
+  return fetch(`${URL}/speech`, {
     method: 'POST', // or 'PUT'
     headers: {
       'Content-Type': 'application/json'
