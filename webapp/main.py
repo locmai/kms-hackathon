@@ -11,7 +11,7 @@ from job_recommendation import api as job_recommendation_api
 
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/infection"
+app.config["MONGO_URI"] = "mongodb://infection01:infection01@ds137581.mlab.com:37581/infection"
 api = Api(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 mongo = PyMongo(app)

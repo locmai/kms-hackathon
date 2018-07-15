@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from .model import job_schema_parser
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://infection01:infection01@ds137581.mlab.com:37581')
 
 db = client['infection']
 
