@@ -9,6 +9,7 @@ from question import api as question_api
 from resume import api as resource_api
 from job_recommendation import api as job_recommendation_api
 
+
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/infection"
 api = Api(app)
