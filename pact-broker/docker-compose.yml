@@ -1,0 +1,20 @@
+pact_db:
+  build: ./pact_db
+  hostname: pact_db
+  container_name: pact-db
+  ports:
+    - "5432:5432"
+
+pact_broker:
+  image: dius/pact-broker
+  links:
+    - pact_db:pact_db
+  hostname: pact_broker
+  container_name: pact-broker
+  environment:
+    - PACT_BROKER_DATABASE_USERNAME=pact_broker
+    - PACT_BROKER_DATABASE_PASSWORD=pact_broker
+    - PACT_BROKER_DATABASE_NAME=pact_broker
+    - PACT_BROKER_DATABASE_HOST=pact_db
+  ports:
+    - "6969:80"
