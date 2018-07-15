@@ -45,7 +45,6 @@ def create_question(root, store, state_list):
 def jump(store, state_list):
     TREE_DIR = "../Clustering/Tree_org.p"
     root = pickle.load(open(TREE_DIR, "rb"))
-    root = pickle.load(open(TREE_DIR, "rb"))
     for i in range(len(state_list)):
         if state_list[i] == 1:
             root = root.left
@@ -59,11 +58,8 @@ def jump(store, state_list):
 
 def consult(message, store, state_list):
     VOCAB_DIR = osp.join((os.getcwd(), 'model', 'vocabulary_org_1.txt'))
-    TREE_DIR = osp.join(os.getcwd(), 'model', 'Tree_org.p')
-    
-    root = pickle.load(open(TREE_DIR, "rb"))
+
     vocab = [line.rstrip() for line in open(VOCAB_DIR, "r").readlines()]
-    sysrand = random.SystemRandom()
 
     labels_path = osp.join(os.getcwd(), 'model', 'labels.p')
     jd_feats_path = osp.join(os.getcwd(), 'model', 'data.p')
