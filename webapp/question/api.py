@@ -23,6 +23,7 @@ INIT_MESSAGE_3 = {
     'message': 'Bạn có khả năng lái xe không?',
     'answers': ['Có', 'Không']
 }
+
 JOB = {
     "field": ["field 1", "field 2", "field 3"],
     "skills": ["a", "b", "c"],
@@ -30,6 +31,7 @@ JOB = {
     "req": ["req 1", "req 2"],
     "benefit": ["be a", "be b"]
 }
+
 INIT_MESSAGE_4 = {
     'isFromUser': False,
     'predict': True,

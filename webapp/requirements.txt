@@ -21,3 +21,6 @@ six==1.11.0
 Werkzeug==0.14.1
 wrapt==1.10.11
 pdftotext==2.1.0
+sklearn
+numpy==1.13.3
+scipy==1.1.0

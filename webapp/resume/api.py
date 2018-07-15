@@ -3,6 +3,8 @@ import os
 from flask_restful import Resource, reqparse
 from werkzeug.datastructures import FileStorage
 from .validation import allowed_file
+from database.mongo_helpers import get_doc_by_id
+from model.utils import infer,extract_feature
 
 UPLOAD_FOLDER = 'resources'
 
@@ -28,12 +30,12 @@ class CVUpload(Resource):
             if resume:
                 # filename = resume.filename
                 filename = "resume.pdf"
-                resume.save(os.path.join(UPLOAD_FOLDER, filename))
-                return {
-                    'code': '200',
-                    'message': 'File uploaded',
-                    'status': 'success'
-                }
+                data_path = os.path.join(UPLOAD_FOLDER, filename)
+                resume.save(data_path)
+                
+                vec = extract_feature(data_path)
+
+                return get_doc_by_id(infer(vec))
             return {
                 'code': '500',
                 'message': 'Something when wrong',
