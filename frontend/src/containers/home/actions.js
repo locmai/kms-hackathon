@@ -1,30 +1,8 @@
-// import { createAsyncAction } from 'store'
-import { createAction } from 'redux-actions'
+import { createAsyncAction } from '../../utils/async_action_creator'
 
-const createAsyncAction = (
-  actionType,
-  payloadHandler,
-  successPayloadHandler,
-  errorPayLoadHandler,
-) => {
-  const type = String(actionType || 'UNK').toUpperCase()
-  const defaultHandler = params => params
-  const mainAction = createAction(type, payloadHandler || defaultHandler)
-  mainAction.done = createAction(
-    `${type}__DONE`,
-    successPayloadHandler || defaultHandler,
-  )
-  mainAction.error = createAction(
-    `${type}__ERROR`,
-    errorPayLoadHandler || defaultHandler,
-  )
-  return mainAction
-}
-
-export const getAllQuestions = createAsyncAction('GET_ALL_QUESTIONS')
-
-export const sendMessage = createAsyncAction('SEND_MESSAGE', (message) => {
+export const switchToJobsList = createAsyncAction('SWITCH_TO_OTHER_COMPONENTS',
+(value) => {
   return {
-    message,
+    value,
   }
 })

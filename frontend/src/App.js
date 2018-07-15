@@ -8,12 +8,12 @@ import ReduxThunkMiddleware from 'redux-thunk'
 import { MainLayout } from './components/layout/main'
 import { Home } from './containers/home'
 // import AppRoute from './app/index.js'
-import homeReducers from './containers/home/reducers'
+import mainReducers from './containers'
 
 import { combineReducers } from 'redux'
 
 const Reducers = combineReducers({
-  homeReducers,
+  ...mainReducers
 })
 
 const store = createStore(
