@@ -60,11 +60,43 @@ class Home extends React.Component {
     this.onSendMessage(message)
   }
 
+  handleUploadFile(event) {
+    const { actions } = this.props
+    const file = event.target.files[0]
+    if (!file) return
+    if (file.size > 10000000) {
+      return
+    }
+    if (
+      file.name.split('.').length > 0 &&
+      file.name.split('.').reverse()[0] !== 'pdf'
+    ) {
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = upload => {
+      // console.log('abc', file.name)
+      // console.log('abc', file)
+      // console.log('abc', upload.target.result)
+      actions.importCV(file.name, file, upload.target.result)
+    }
+    reader.readAsDataURL(file)
+    // this.uploadFileForm.reset()
+  }
+
+  openFileBrowser() {
+    if (this.importFileInput) {
+      this.importFileInput.click()
+    }
+  }
+
   render() {
     const { message } = this.state
     const { messages, isLoadingMessages, actions } = this.props
     let isYesNoQuestion = false
     let isPredicted = false
+    let isUploadMessage = false
+    let hasNoMessage = false
     const hasMessage = messages && messages.length > 0
     const hasLastMessage = hasMessage && messages[messages.length - 1]
     const isConsultMessage = messages.length > 0 && messages[messages.length - 1].answers && messages[messages.length - 1].answers.length > 0
@@ -79,7 +111,15 @@ class Home extends React.Component {
     if (isDonePredicted) {
       isPredicted = true
     }
-
+    if (hasMessage && messages[messages.length - 1].message === 'Hãy tải CV của bạn lên') {
+      isUploadMessage = true
+    }
+    if (hasMessage && !messages[messages.length - 1].message && !messages[messages.length - 1].answers) {
+      hasNoMessage = true
+    }
+    if (messages) {
+      console.log('message', messages)
+    }
     return (
       <div className='chatbox-container'>
         <Scrollbars className='chatbox-body' autoHide={true} ref={(c) => this.scrollbars = c}>
@@ -91,7 +131,7 @@ class Home extends React.Component {
                     {!message.isFromUser
                       ? (
                         <div className='admin'>
-                          {message.message}
+                          {message.message ? message.message : 'Mời bạn xem kết quả'}
                         </div>
                       )
                       : (
@@ -100,9 +140,6 @@ class Home extends React.Component {
                         </div>
                       )
                     }
-                    {/* <div className='user'>
-                  Hello
-                  </div> */}
                   </React.Fragment>
                 ))
               }
@@ -116,12 +153,28 @@ class Home extends React.Component {
                   </Button>
                 </div>
               )}
-              {isPredicted && (
+              {hasNoMessage && (
                 <div className='button-groups'>
                   <Button variant='outlined' size='medium' className='success-button' onClick={() => actions.switchToJobsList(messages[messages.length - 1].jobs)}>
                     Xem danh sách
                   </Button>
                 </div>
+              )}
+              {isUploadMessage && (
+                <React.Fragment>
+                <div className='button-groups'>
+                  <Button variant='outlined' size='medium' className='success-button' onClick={() => this.openFileBrowser()}>
+                    Đăng hồ sơ
+                  </Button>
+                </div>
+                <input
+                  style={{ display: 'none' }}
+                  ref={ref => this.importFileInput = ref}
+                  type={'file'}
+                  accept={'.pdf'}
+                  onChange={event => this.handleUploadFile(event)}
+                />
+                </React.Fragment>
               )}
             </React.Fragment>
           )}
@@ -136,7 +189,7 @@ class Home extends React.Component {
             value={message}
             onChange={this.handleChange('message')}
             // margin='normal'
-            placeholder={isYesNoQuestion || isPredicted ? 'Xin hãy bấm chọn' : 'Nhập câu trả lời'}
+            placeholder={isYesNoQuestion || isPredicted ? 'Hãy bấm chọn' : 'Nhập câu trả lời'}
             disableUnderline={true}
             multiline={true}
             rows={1}
@@ -166,6 +219,7 @@ const mapDispatchToProps = (dispatch) => {
       getAllQuestions: chatboxActions.onGetAllQuestions,
       sendMessage: chatboxActions.onSendMessage,
       switchToJobsList: homeActions.onSwitchToJobsList,
+      importCV: chatboxActions.onImportCV,
     }, dispatch),
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
+import * as jobActions from './middlewares'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import { bindActionCreators } from 'redux'
@@ -49,93 +50,72 @@ class JobInfo extends React.Component {
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }))
   }
-
   render() {
     const { classes, job, index } = this.props
-    console.log('hihi', job)
-    let de = ''
-    for (let d of job.desc) {
-      if (de === '') {
-        de = d
-      }
-      de = de + ', ' + d
-    }
-
-    let be = ''
-    for (let b of job.benefit) {
-      if (be === '') {
-        be = b
-      }
-      be = be + ', ' + b
-    }
-
-    let sk = ''
-    for (let s of job.skills) {
-      if (sk === '') {
-        sk = s
-      }
-      sk = sk + ', ' + s
-    }
-
-    let re = ''
-    for (let r of job.req) {
-      if (re === '') {
-        re = r
-      }
-      re = re + ', ' + r
-    }
+    // console.log('abc', job)
+    let field = ''
+    field = job.field && job.field.map((field, index) => <div key={index}>{field}</div>)
+    console.log('field', field)
+    let skill = ''
+    skill = job.skill && job.skill.map((skill, index) => <div key={index}>{skill}</div>)
     return (
-      <div>
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label='Recipe' className={classes.avatar}>
-                {index + 1}
-              </Avatar>
-            }
-            // action={
-            //   <IconButton>
-            //     <MoreVertIcon />
-            //   </IconButton>
-            // }
-            title='Shrimp and Chorizo Paella'
-            subheader='September 14, 2016'
-          />
-          <CardMedia
-            className={classes.media}
-            image={JobImage}
-            title='Contemplative Reptile'
-          />
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label='Show more'
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-          <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
-            <CardContent>
+      <Card className='job-container'>
+        <CardHeader
+          avatar={
+            <Avatar aria-label='Recipe' className='avatar'>
+              {index + 1}
+            </Avatar>
+          }
+          // action={
+          //   <IconButton>
+          //     <MoreVertIcon />
+          //   </IconButton>
+          // }
+          title={field}
+          subheader={skill}
+        />
+        <CardMedia
+          className={classes.media}
+          image={JobImage}
+          title='Contemplative Reptile'
+        />
+        <CardActions className={classes.actions} disableActionSpacing>
+          <IconButton
+            className={classnames(classes.expand, {
+              [classes.expandOpen]: this.state.expanded,
+            })}
+            onClick={this.handleExpandClick}
+            aria-expanded={this.state.expanded}
+            aria-label='Show more'
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+          <CardContent>
+            {job.description && (
               <Typography paragraph>
-                Description: {de}
+                Description: {job.description}
               </Typography>
+            )}
+            {job.benefit && (
               <Typography paragraph>
-                Benefit: {be}
+                Benefit: {job.benefit}
               </Typography>
+            )}
+            {/* {job.skills && (
               <Typography paragraph>
-                Skills: {sk}
+                Skills: {job.skills}
               </Typography>
+            )} */}
+            {job.requirement && (
               <Typography paragraph>
-                Requirment: {re}
+                Requirement: {job.requirement}
               </Typography>
-            </CardContent>
-          </Collapse>
-        </Card>
-      </div>
+            )}
+          </CardContent>
+        </Collapse>
+      </Card>
     )
   }
 }
@@ -152,6 +132,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
+      getJobsList: jobActions.onGetJobsList,
     }, dispatch),
   }
 }

@@ -1,7 +1,28 @@
+
+@mixin animated($duration) {
+  animation-duration: $duration;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin fadeIn {
+  animation-name: fadeIn;
+}
+
 .main-layout {
   height: 100%;
   width: 100%;
-  padding: 10px;
+  padding: 20px 30px;
+  @include animated(0.3s);
+  @include fadeIn;
   &:before {
     background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url('../../../static/media/background.png') center no-repeat;
     background-size: cover;
@@ -9,7 +30,7 @@
     display: block;
     height: 100%;
     left: 0;
-    opacity: 0.8;
+    opacity: 0.95;
     z-index: -1;
     position: absolute;
     top: 0;
@@ -24,7 +45,7 @@
     text-transform: uppercase;
     color: #fff;
     display: flex;
-    height: 100px;
+    height: 50px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -34,7 +55,7 @@
     width: 100%;
   }
   .footer {
-    height: 100px;
+    height: 50px;
     color: #fff;
     display: flex;
     align-items: center;

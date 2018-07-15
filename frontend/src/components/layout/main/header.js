@@ -1,4 +1,5 @@
 import React from 'react';
+// import Speech from 'react-speech';
 import { sendAudioFile } from '../../../services/homeApi';
 export default class Header extends React.Component {
   state = {};
@@ -63,6 +64,6 @@ export default class Header extends React.Component {
   }
   getSpeechToText() {}
   render() {
-    return <div className="header">Trả lời ngay nhận ngay việc làm</div>;
+    return <div className="header">Chat xàm có việc làm</div>;
   }
 }
