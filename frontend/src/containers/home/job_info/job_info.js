@@ -1,6 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
+import { bindActionCreators } from 'redux'
 import classnames from 'classnames'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -49,15 +51,46 @@ class JobInfo extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, job, index } = this.props
+    console.log('hihi', job)
+    let de = ''
+    for (let d of job.desc) {
+      if (de === '') {
+        de = d
+      }
+      de = de + ', ' + d
+    }
 
+    let be = ''
+    for (let b of job.benefit) {
+      if (be === '') {
+        be = b
+      }
+      be = be + ', ' + b
+    }
+
+    let sk = ''
+    for (let s of job.skills) {
+      if (sk === '') {
+        sk = s
+      }
+      sk = sk + ', ' + s
+    }
+
+    let re = ''
+    for (let r of job.req) {
+      if (re === '') {
+        re = r
+      }
+      re = re + ', ' + r
+    }
     return (
       <div>
         <Card className={classes.card}>
           <CardHeader
             avatar={
               <Avatar aria-label='Recipe' className={classes.avatar}>
-                R
+                {index + 1}
               </Avatar>
             }
             // action={
@@ -88,14 +121,16 @@ class JobInfo extends React.Component {
           <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
             <CardContent>
               <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes and peppers, and
-                cook without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
-                Reduce heat to medium-low, add reserved shrimp and mussels, tucking them down into
-                the rice, and cook again without stirring, until mussels have opened and rice is
-                just tender, 5 to 7 minutes more. (Discard any mussels that don’t open.)
+                Description: {de}
               </Typography>
-              <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then serve.
+              <Typography paragraph>
+                Benefit: {be}
+              </Typography>
+              <Typography paragraph>
+                Skills: {sk}
+              </Typography>
+              <Typography paragraph>
+                Requirment: {re}
               </Typography>
             </CardContent>
           </Collapse>
@@ -105,8 +140,22 @@ class JobInfo extends React.Component {
   }
 }
 
-JobInfo.propTypes = {
-  classes: PropTypes.object.isRequired,
+const mapStateToProps = (state) => {
+  return {
+    // messages: state.chatboxReducers.messages,
+    // isLoadingMessages: state.chatboxReducers.isLoadingMessages,
+    // successMessage: state.account.successMessage,
+    // isFetching: state.account.isFetching,
+  }
 }
 
-export default withStyles(styles)(JobInfo)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+    }, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(JobInfo))
+
+// export default withStyles(styles)(JobInfo)

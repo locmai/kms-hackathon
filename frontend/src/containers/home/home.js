@@ -17,7 +17,7 @@ class Home extends React.Component {
           : (
             <div className='jobs-list-container'>
               {jobsList && jobsList.length > 0 &&
-                jobsList.map((job, index) => <JobInfo key={index} job={job} />)
+                jobsList.map((job, index) => <JobInfo key={index} index={index} job={job} />)
               }
             </div>
           )
