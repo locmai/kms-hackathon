@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mongodb:
+    image: bitnami/mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: infection
+
+  webapp:
+    image: locmai/api
+    restart: always
+    ports:
+      - 5000:5000
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
