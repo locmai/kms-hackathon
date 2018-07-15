@@ -1,4 +1,5 @@
 const URL = 'http://192.168.33.70:5000/api';
+
 export const getAllQuestions = () => {
   console.log('greeting');
   return fetch(`${URL}/question/greeting`, {
