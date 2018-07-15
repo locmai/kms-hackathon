@@ -3,6 +3,7 @@ import { handleActions } from 'redux-actions'
 import {
   getAllQuestions,
   sendMessage,
+  importCV,
 } from './actions'
 
 const initState = {
@@ -12,6 +13,16 @@ const initState = {
 
 const chatboxReducers = handleActions(
   {
+    [importCV]: (state, action) => {
+      return {
+        ...initState,
+      }
+    },
+    [importCV.done]: (state, action) => {
+      return {
+        ...initState,
+      }
+    },
     [getAllQuestions]: (state, action) => {
       return {
         ...initState,

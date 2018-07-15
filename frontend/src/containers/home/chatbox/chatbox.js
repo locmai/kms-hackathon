@@ -75,7 +75,10 @@ class Home extends React.Component {
     }
     const reader = new FileReader()
     reader.onload = upload => {
-      actions.importKnowledge(file.name, file, upload.target.result)
+      // console.log('abc', file.name)
+      // console.log('abc', file)
+      // console.log('abc', upload.target.result)
+      actions.importCV(file.name, file, upload.target.result)
     }
     reader.readAsDataURL(file)
     // this.uploadFileForm.reset()
@@ -92,6 +95,7 @@ class Home extends React.Component {
     const { messages, isLoadingMessages, actions } = this.props
     let isYesNoQuestion = false
     let isPredicted = false
+    let isUploadMessage = false
     const hasMessage = messages && messages.length > 0
     const hasLastMessage = hasMessage && messages[messages.length - 1]
     const isConsultMessage = messages.length > 0 && messages[messages.length - 1].answers && messages[messages.length - 1].answers.length > 0
@@ -106,7 +110,13 @@ class Home extends React.Component {
     if (isDonePredicted) {
       isPredicted = true
     }
+    if (hasMessage && messages[messages.length - 1].message === 'Hãy tải CV của bạn lên') {
+      isUploadMessage = true
+    }
 
+    if (messages) {
+      console.log('message', messages)
+    }
     return (
       <div className='chatbox-container'>
         <Scrollbars className='chatbox-body' autoHide={true} ref={(c) => this.scrollbars = c}>
@@ -147,18 +157,23 @@ class Home extends React.Component {
                   </Button>
                 </div>
               )}
-              <div className='button-groups'>
-                <Button variant='outlined' size='medium' className='success-button' onClick={() => this.openFileBrowser()}>
-                  Đăng hồ sơ
-                </Button>
-              </div>
-              <input
-                style={{ display: 'hidden' }}
-                ref={ref => this.importFileInput = ref}
-                type={'file'}
-                accept={'.pdf'}
-                onChange={event => this.handleUploadFile(event)}
-              />
+              {isUploadMessage && (
+                <React.Fragment>
+                <div className='button-groups'>
+                  <Button variant='outlined' size='medium' className='success-button' onClick={() => this.openFileBrowser()}>
+                    Đăng hồ sơ
+                  </Button>
+                </div>
+                <input
+                  style={{ display: 'none' }}
+                  ref={ref => this.importFileInput = ref}
+                  type={'file'}
+                  accept={'.pdf'}
+                  onChange={event => this.handleUploadFile(event)}
+                />
+                </React.Fragment>
+              )
+              }
             </React.Fragment>
           )}
           {isLoadingMessages && <CircularProgress className={'progress'} />}
@@ -202,6 +217,7 @@ const mapDispatchToProps = (dispatch) => {
       getAllQuestions: chatboxActions.onGetAllQuestions,
       sendMessage: chatboxActions.onSendMessage,
       switchToJobsList: homeActions.onSwitchToJobsList,
+      importCV: chatboxActions.onImportCV,
     }, dispatch),
   }
 }

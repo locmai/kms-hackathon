@@ -45,15 +45,19 @@ const styles = theme => ({
 })
 
 class JobInfo extends React.Component {
-  
+  state = { expanded: false }
+
+  handleExpandClick = () => {
+    this.setState(state => ({ expanded: !state.expanded }))
+  }
   render() {
     const { classes, job, index } = this.props
-    console.log('abc', job)
+    // console.log('abc', job)
     return (
-      <Card className={classes.card}>
+      <Card className='job-container'>
         <CardHeader
           avatar={
-            <Avatar aria-label='Recipe' className={classes.avatar}>
+            <Avatar aria-label='Recipe' className='avatar'>
               {index + 1}
             </Avatar>
           }

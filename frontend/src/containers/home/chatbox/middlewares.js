@@ -1,9 +1,28 @@
-import { getAllQuestions, sendMessage } from './actions'
+import { getAllQuestions, sendMessage, importCV } from './actions'
 
 import { 
   getAllQuestions as getAllQuestionsRequest,
   sendMessage as sendMessageRequest,
- } from '../../../services/homeApi'
+  importCV as importCVRequest,
+} from '../../../services/homeApi'
+
+ export const onImportCV = (file1, file2, file3) => {
+  return dispatch => {
+    dispatch(importCV())
+    return importCVRequest({ file: file3 })
+      .then(res => {
+        // console.log('abc', res)
+        return res.json()
+      })
+      .then(data => {
+        if (data) {
+          dispatch(importCV.done(data))
+        } else {
+          dispatch(importCV.error({}))
+        }
+      })
+  }
+}
 
 export const onGetAllQuestions = () => {
   return dispatch => {
@@ -24,9 +43,25 @@ export const onGetAllQuestions = () => {
 }
 
 export const onSendMessage = (msg) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { messages } = getState()
     dispatch(sendMessage(msg))
-    return sendMessageRequest({ message: msg.message })
+    let postMessages = {}
+    if (messages && messages.length > 0) {
+      postMessages = {
+        root: [],
+        list_message: [],
+        message: msg.message,
+      }
+    } else {
+      postMessages = {
+        root: [],
+        list_message: [],
+        message: msg.message,
+      }
+      console.log('hihi', postMessages)
+    }
+    return sendMessageRequest({...postMessages})
       .then(res => {
         // console.log('abc', res)
         return res.json()

@@ -7,3 +7,5 @@ export const sendMessage = createAsyncAction('SEND_MESSAGE', (message) => {
     message,
   }
 })
+
+export const importCV = createAsyncAction('IMPORT_CV')

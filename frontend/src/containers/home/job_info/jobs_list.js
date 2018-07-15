@@ -1,10 +1,12 @@
 import React from 'react'
+import './styles.scss'
 // import PropTypes from 'prop-types'
 import * as jobActions from './middlewares'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import JobInfo from './job_info'
 import CircularProgress from '@material-ui/core/CircularProgress'
+// import { Scrollbars } from 'react-custom-scrollbars'
 
 class JobsList extends React.Component {
   state = { expanded: false }
@@ -20,12 +22,23 @@ class JobsList extends React.Component {
 
   render() {
     const { jobsList, isLoadingJobs } = this.props
+    // const jobsList = [
+    //   { description: 'abc', skill: 'abc' },
+    //   { description: 'abc', skill: 'abc' },
+    //   { description: 'abc', skill: 'abc' },
+    //   { description: 'abc', skill: 'abc' },
+    //   { description: 'abc', skill: 'abc' },
+    //   { description: 'abc', skill: 'abc' },
+    //   { description: 'abc', skill: 'abc' },
+    // ]
     return (
       <div className='jobs-list-container'>
+      {/* // <Scrollbars className='jobs-list-container' autoHide={true}> */}
         {jobsList && jobsList.length > 0 &&
           jobsList.map((job, index) => <JobInfo key={index} index={index} job={job} />)
         }
         {isLoadingJobs && <CircularProgress className={'progress'} />}
+        {/* // </Scrollbars> */}
       </div>
     )
   }
