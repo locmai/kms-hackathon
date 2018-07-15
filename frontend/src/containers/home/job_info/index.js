@@ -1,1 +1,1 @@
-export { default as JobInfo } from './job_info'
+export { default as JobsList } from './jobs_list.js'
