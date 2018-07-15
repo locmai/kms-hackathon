@@ -10,23 +10,11 @@ const storage = new Storage({
 const client = new speech.SpeechClient({
   keyFilename: '/Users/minhhoang/AWS/MachineLearning.json'
 });
-const URL = 'http://192.168.33.159/api';
-/*
-const sendMessage = body => {
-  console.log('send message', body);
-  return fetch(`${URL}/question`, {
-    method: 'POST', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-};
-*/
+const URL = 'http://192.168.33.159:5000/api/question';
 const sendMessage = msg => {
   req(
     {
-      uri: 'http://192.168.33.159:5000/api/question',
+      uri: URL,
       method: 'POST',
       timeout: 10000,
       followRedirect: true,
@@ -38,35 +26,10 @@ const sendMessage = msg => {
       })
     },
     function(error, response, body) {
-      console.log(body);
+      console.log(body && body.toString('utf8'));
     }
   );
 };
-/*
-const sendMessage = body => {
-  req(
-    {
-      uri: `${URL}/question/greeting`,
-      method: 'GET'
-      //body: JSON.stringify(body)
-    },
-    function(error, response, body) {
-      console.log(error);
-      console.log(body);
-      console.log(response);
-    }
-  );
-};
-*/
-
-/**
- * TODO(developer): Uncomment the following lines before running the sample.
- */
-// const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
-// const encoding = 'Encoding of the audio file, e.g. LINEAR16';
-// const sampleRateHertz = 16000;
-// const languageCode = 'BCP-47 language code, e.g. en-US';
-
 const request = {
   config: {
     encoding: 'LINEAR16',
@@ -82,6 +45,12 @@ const recognizeStream = client
   .streamingRecognize(request)
   .on('error', console.error)
   .on('data', data => {
+    const speechResult = data.results;
+    console.log('Speech', data);
+    for (let item of speechResult) {
+      const alternatives = item.alternatives;
+      console.log(alternatives);
+    }
     process.stdout.write(
       data.results[0] && data.results[0].alternatives[0]
         ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
@@ -94,15 +63,15 @@ const recognizeStream = client
 record
   .start({
     encoding: 'LINEAR16',
-    sampleRateHertz: 16000,
+    sampleRateHertz: 44100,
     enableAutomaticPunctuation: true,
     languageCode: 'vi-VN',
     model: 'default',
-    threshold: 0.2,
+    threshold: 0,
     // Other options, see https://www.npmjs.com/package/node-record-lpcm16#options
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sox"
-    silence: '30.0'
+    silence: '3.0'
   })
   .on('error', console.error)
   .pipe(recognizeStream);
