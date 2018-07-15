@@ -12,9 +12,10 @@ export default class Header extends React.Component {
   initRecordAudio() {
     return () =>
       new Promise(async resolve => {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true
-        });
+        const constraints = {
+          audio: { sampleRate: 16000 }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         const mediaRecorder = new MediaRecorder(stream);
         const audioChunks = [];
 
@@ -62,20 +63,6 @@ export default class Header extends React.Component {
   }
   getSpeechToText() {}
   render() {
-    return (
-      <div className="header">
-        Trả lời ngay nhận ngay việc làm
-        <button
-          onClick={this.startRecordVoice}
-          type="button"
-          className="record"
-        >
-          Start
-        </button>
-        <button onClick={this.stopRecord} type="button" className="stop">
-          Stop
-        </button>
-      </div>
-    );
+    return <div className="header">Trả lời ngay nhận ngay việc làm</div>;
   }
 }
