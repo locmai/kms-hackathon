@@ -5,6 +5,7 @@ from werkzeug.datastructures import FileStorage
 from .validation import allowed_file
 from database.mongo_helpers import get_doc_by_id
 from model.utils import infer,extract_feature
+import pdf2text
 
 UPLOAD_FOLDER = 'resources'
 
@@ -32,8 +33,11 @@ class CVUpload(Resource):
                 filename = "resume.pdf"
                 data_path = os.path.join(UPLOAD_FOLDER, filename)
                 resume.save(data_path)
-                
-                vec = extract_feature(data_path)
+                resume_text = pdf2text.pdf_to_text(data_path)
+                resume_txt_path = os.path.join(UPLOAD_FOLDER, 'resume.txt')
+                with open(, 'w', encoding='utf-8') as f:
+                    f.write(resume_text)
+                vec = extract_feature(resume_txt_path)
 
                 return get_doc_by_id(infer(vec))
             return {
