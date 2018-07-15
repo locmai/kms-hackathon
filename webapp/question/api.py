@@ -1,5 +1,7 @@
 from flask import request
 from flask_restful import Resource
+from model.consult import get_result, consult
+from database.model import get_doc_by_id
 
 MOCK_QUESTION = {
     'isFromUser': False,
@@ -45,21 +47,22 @@ class GreetingQuestion(Resource):
         return INIT_MESSAGE, 200, {'Set-Cookie': 'initial=true'}
 
 
-STUB_DATA = [INIT_MESSAGE_2, INIT_MESSAGE_3, INIT_MESSAGE_4]
-GLOBAL_COUNT = 0
-
-
 class Question(Resource):
-    def get(self):
-        return MOCK_QUESTION
-
     def post(self):
-        global GLOBAL_COUNT
-        json_data = request.get_json(force=True)
         return_message = json_data['message']
-        import time
-        print(return_message)
-        time.time()
-        return_msg = STUB_DATA[GLOBAL_COUNT]
-        GLOBAL_COUNT = GLOBAL_COUNT + 1 if GLOBAL_COUNT < 2 else 0
-        return return_msg
+        return_list_message = json_data['list_message']
+        return_root = json_data['root']
+        cursor, new_message, new_list_message, new_root = consult(
+            return_message, return_list_message, return_root)
+        if cursor.label != -1:
+            return {
+                get_doc_by_id(get_result(cursor.label))
+            }
+        else:
+            return {
+                'isFromUser': False,
+                'message': new_message,
+                'list_message': new_list_message,
+                'root': new_root
+            }
+
