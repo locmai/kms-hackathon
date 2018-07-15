@@ -6,16 +6,17 @@ import {
 
 const initState = {
   isChatboxShown: true,
-  jobsList: [],
+  // jobsList: [],
+  // isLoadingJobs: false,
 }
 
 const homeReducers = handleActions(
   {
     [switchToJobsList]: (state, action) => {
-      console.log('abc', action.payload)
+      // console.log('abc', action.payload)
       return {
         ...initState,
-        jobsList: [...action.payload.value],
+        // jobsList: [...action.payload.value],
         isChatboxShown: false,
       }
     },

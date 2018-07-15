@@ -64,11 +64,6 @@ export default class Header extends React.Component {
   }
   getSpeechToText() {}
   render() {
-    return (
-      <div className="header">
-        Trả lời ngay nhận ngay việc làm
-        <Speech text="Welcome to react speech" />
-      </div>
-    );
+    return <div className="header">Trả lời xàm có ngay việc làm</div>;
   }
 }

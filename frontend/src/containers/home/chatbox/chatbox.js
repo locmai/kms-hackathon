@@ -60,6 +60,33 @@ class Home extends React.Component {
     this.onSendMessage(message)
   }
 
+  handleUploadFile(event) {
+    const { actions } = this.props
+    const file = event.target.files[0]
+    if (!file) return
+    if (file.size > 10000000) {
+      return
+    }
+    if (
+      file.name.split('.').length > 0 &&
+      file.name.split('.').reverse()[0] !== 'pdf'
+    ) {
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = upload => {
+      actions.importKnowledge(file.name, file, upload.target.result)
+    }
+    reader.readAsDataURL(file)
+    // this.uploadFileForm.reset()
+  }
+
+  openFileBrowser() {
+    if (this.importFileInput) {
+      this.importFileInput.click()
+    }
+  }
+
   render() {
     const { message } = this.state
     const { messages, isLoadingMessages, actions } = this.props
@@ -100,9 +127,6 @@ class Home extends React.Component {
                         </div>
                       )
                     }
-                    {/* <div className='user'>
-                  Hello
-                  </div> */}
                   </React.Fragment>
                 ))
               }
@@ -123,6 +147,18 @@ class Home extends React.Component {
                   </Button>
                 </div>
               )}
+              <div className='button-groups'>
+                <Button variant='outlined' size='medium' className='success-button' onClick={() => this.openFileBrowser()}>
+                  Đăng hồ sơ
+                </Button>
+              </div>
+              <input
+                style={{ display: 'hidden' }}
+                ref={ref => this.importFileInput = ref}
+                type={'file'}
+                accept={'.pdf'}
+                onChange={event => this.handleUploadFile(event)}
+              />
             </React.Fragment>
           )}
           {isLoadingMessages && <CircularProgress className={'progress'} />}
@@ -136,7 +172,7 @@ class Home extends React.Component {
             value={message}
             onChange={this.handleChange('message')}
             // margin='normal'
-            placeholder={isYesNoQuestion || isPredicted ? 'Xin hãy bấm chọn' : 'Nhập câu trả lời'}
+            placeholder={isYesNoQuestion || isPredicted ? 'Hãy bấm chọn' : 'Nhập câu trả lời'}
             disableUnderline={true}
             multiline={true}
             rows={1}
