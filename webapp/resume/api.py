@@ -20,7 +20,8 @@ class CVUpload(Resource):
     def post(self):
         print(parser)
         data = parser.parse_args()
-        print(data['file'])
+        print(data)
+        print("==============")
         if data['file'] == "":
             return {
                 'data': '',
