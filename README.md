@@ -1,5 +1,10 @@
 # kms-hackathon
 
+
+## Introduction
+
+For unemployed people with low-level skills, the EASY product is a job search consultant that not only connects employers with those who are qualified for the jobs but also helps the unemployed explore their potentials. Unlike online application tracking systems which require domain-specific knowledge and resume writing skill, our product’s focus is to provide a simple but effective UI that brings a better UX to all users, making the application process fast and convenient.
+
 ## Setup
 
 ### Pre-requisite:
@@ -51,6 +56,20 @@ yarn start
 
 TBD 
 
-## Future works
+## Technology stack
+
+### Front-end
+
+* React 16
+
+### Back-end
+* Flask
+* MongoDB
+* Docker 
+
+We used Flask for fast prototyping the RESTful API server so the Front-end application can communicate to and as a connection between the logic handlers with the UI. The logic handlers (powered by various ML models to handle both users' messages and CV sent from the users) were written in Python, so we could leverage that and the integration process was really fast. 
+
+### Machine Learning Techniques
 
 TBD
+
