@@ -10,7 +10,7 @@ export const onImportCV = (file1, file2, file3) => {
   console.log(file1, file2, file3);
   return dispatch => {
     dispatch(importCV());
-    return importCVRequest({ filename: file1, file: file3 })
+    return importCVRequest({ filename: file1, file: file2, filecheck: file3 })
       .then(res => {
         // console.log('abc', res)
         return res.json();

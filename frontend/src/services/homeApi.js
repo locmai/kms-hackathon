@@ -46,6 +46,7 @@ export const importCV = body => {
   console.log('hihi', body);
   const data = new FormData();
   data.append('file', body['file']);
+  data.append('filecheck', body['filecheck']);
   data.append('filename', body['filename']);
   return fetch(`${URL}/upload`, {
     method: 'POST', // or 'PUT'
