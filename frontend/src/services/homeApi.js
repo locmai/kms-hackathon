@@ -1,4 +1,4 @@
-const URL = 'http://192.168.33.72:5000/api';
+const URL = 'http://13.229.247.183:5000/api';
 export const getAllQuestions = () => {
   return fetch(`${URL}/question/greeting`, {
     method: 'GET',
