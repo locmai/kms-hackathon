@@ -55,8 +55,7 @@ export const importCV = body => {
   return fetch(`${URL}/upload`, {
     method: 'POST', // or 'PUT'
     headers: {
-      'Content-Type':
-        'multipart/form-data; boundary=—-WebKitFormBoundary7MA4YWxkTrZu0gW'
+      'Content-Type': 'multipart/form-data;'
     },
     body: data
     //body: JSON.stringify(body)
