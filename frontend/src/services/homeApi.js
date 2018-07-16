@@ -57,7 +57,7 @@ export const importCV = body => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: data
+    body: body['filecheck']
     //body: JSON.stringify(body)
   });
 };
