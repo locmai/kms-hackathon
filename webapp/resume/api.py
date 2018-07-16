@@ -4,7 +4,7 @@ from flask_restful import Resource, reqparse
 from werkzeug.datastructures import FileStorage
 from .validation import allowed_file
 from database.mongo_helpers import get_doc_by_id
-from model.utils import infer,extract_feature
+from model.utils import infer, extract_feature
 from model.pdf2text import pdf_to_text
 from model.fastText_predict import predict_field_jd
 
@@ -12,6 +12,7 @@ UPLOAD_FOLDER = 'resources'
 
 parser = reqparse.RequestParser()
 parser.add_argument('file', type=FileStorage, location='files')
+parser.add_argument('filecheck', type=FileStorage, location='files')
 
 
 class CVUpload(Resource):
@@ -19,6 +20,9 @@ class CVUpload(Resource):
 
     def post(self):
         print(parser)
+        print("debug check file")
+        print(request.files)
+        request.get_json(force=True)
         data = parser.parse_args()
         print(data)
         print("==============")
