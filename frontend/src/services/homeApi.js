@@ -1,4 +1,4 @@
-const URL = 'http://192.168.33.72:5000/api'
+const URL = 'http://192.168.33.72:5000/api';
 export const getAllQuestions = () => {
   return fetch(`${URL}/question/greeting`, {
     method: 'GET',
@@ -43,15 +43,19 @@ export const getJobsList = async () => {
 };
 
 export const importCV = body => {
-  console.log('hihi', body)
+  console.log('hihi', body);
+  const data = new FormData();
+  data.append('file', body['file']);
+  data.append('filename', body['filename']);
   return fetch(`${URL}/upload`, {
     method: 'POST', // or 'PUT'
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body)
-  })
-}
+    body: data
+    //body: JSON.stringify(body)
+  });
+};
 
 // const sendUserMessage = async msg => {
 //   let resp = {}
