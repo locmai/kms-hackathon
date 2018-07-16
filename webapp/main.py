@@ -8,10 +8,18 @@ from flask_restful import Api
 from question import api as question_api
 from resume import api as resource_api
 from job_recommendation import api as job_recommendation_api
+class Tree(object):
+    def __init__(self):
+        self.left = None
+        self.right = None
+        self.label = -1
+        self.data = None
+        self.kmeans = None
+
 
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://infection01:infection01@ds137581.mlab.com:37581/infection"
+app.config["MONGO_URI"] = "mongodb://192.168.33.70:27017/infection"
 api = Api(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 mongo = PyMongo(app)
@@ -29,7 +37,7 @@ def init_data():
             filename, _ = os.path.splitext(filename)
             data.update({'id': filename})
             mongo.db.jobs.insert_one(data)
-
+    # mongo.close()
 if __name__ == '__main__':
-    init_data()
-    app.run(host='0.0.0.0', port=7070)
+    # init_data()
+    app.run(host='0.0.0.0', port=5000)

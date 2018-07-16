@@ -5,7 +5,8 @@ from werkzeug.datastructures import FileStorage
 from .validation import allowed_file
 from database.mongo_helpers import get_doc_by_id
 from model.utils import infer,extract_feature
-import pdf2text
+from model.pdf2text import pdf_to_text
+from model.fastText_predict import predict_field_jd
 
 UPLOAD_FOLDER = 'resources'
 
@@ -17,8 +18,9 @@ class CVUpload(Resource):
     decorators = []
 
     def post(self):
+        print(parser)
         data = parser.parse_args()
-
+        print(data['file'])
         if data['file'] == "":
             return {
                 'data': '',
@@ -26,20 +28,20 @@ class CVUpload(Resource):
                 'status': 'error'
             }
         resume = data['file']
-
+        print(resume)
         if allowed_file(resume.filename):
             if resume:
                 # filename = resume.filename
                 filename = "resume.pdf"
                 data_path = os.path.join(UPLOAD_FOLDER, filename)
                 resume.save(data_path)
-                resume_text = pdf2text.pdf_to_text(data_path)
-                resume_txt_path = os.path.join(UPLOAD_FOLDER, 'resume.txt')
-                with open(, 'w', encoding='utf-8') as f:
-                    f.write(resume_text)
-                vec = extract_feature(resume_txt_path)
-
-                return get_doc_by_id(infer(vec))
+                resume_text = pdf_to_text(data_path)
+#                resume_txt_path = os.path.join(UPLOAD_FOLDER, 'resume.txt')
+#                with open(, 'w', encoding='utf-8') as f:
+#                    f.write(resume_text)
+                # vec = extract_feature(resume_txt_path)
+                fields, jd_id = predict_field_jd(resume_text)
+                return get_doc_by_id(fields)
             return {
                 'code': '500',
                 'message': 'Something when wrong',
