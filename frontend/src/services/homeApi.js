@@ -56,22 +56,3 @@ export const importCV = body => {
     //body: JSON.stringify(body)
   });
 };
-
-// const sendUserMessage = async msg => {
-//   let resp = {}
-//   try {
-//     const result = await fetch(`${URL}/question`, {
-//       method: 'POST', // or 'PUT'
-//       body: JSON.stringify({
-//         mesasge: msg
-//       }), // data can be `string` or {object}!
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//     resp = await result.json()
-//   } catch (err) {
-//     console.log(err)
-//   }
-//   return resp
-// }
