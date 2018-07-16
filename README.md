@@ -71,4 +71,6 @@ We used Flask for fast prototyping the RESTful API server so the Front-end appli
 
 ### Machine Learning Techniques
 
-TBD
+Text Classification: State-of-the-art Text Classification based on sub-word feature, supporting Vietnamese.
+Text Clustering: Kmean cluster- unsupervised learning algorithm- is not required any annotations. Thus, the system could be improved significantly by adding more training data. The authors took advantage of the binary decision tree to give pieces of advice for the job seeker
+
