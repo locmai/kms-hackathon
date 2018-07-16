@@ -44,10 +44,14 @@ export const getJobsList = async () => {
 
 export const importCV = body => {
   console.log('hihi', body);
+  console.log('post cv', body['file']);
+  console.log('post cv', body['filecheck']);
+  console.log('post cv', body['filename']);
   const data = new FormData();
   data.append('file', body['file']);
   data.append('filecheck', body['filecheck']);
   data.append('filename', body['filename']);
+  console.log('Log data', data);
   return fetch(`${URL}/upload`, {
     method: 'POST', // or 'PUT'
     headers: {
