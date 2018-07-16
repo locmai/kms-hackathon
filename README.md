@@ -54,7 +54,7 @@ yarn start
 
 ## Screenshots
 
-TBD 
+![screenshot1](demo.png?raw=true "Demo")
 
 ## Technology stack
 
@@ -72,4 +72,3 @@ We used Flask for fast prototyping the RESTful API server so the Front-end appli
 ### Machine Learning Techniques
 
 TBD
-
