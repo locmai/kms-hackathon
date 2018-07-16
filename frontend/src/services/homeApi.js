@@ -43,7 +43,11 @@ export const getJobsList = async () => {
 };
 
 export const importCV = body => {
+<<<<<<< HEAD
   console.log('hihi', body)
+=======
+  console.log('hihi', body);
+>>>>>>> c490bc0b6541eb52604cde34ae0fb96926f842f9
   const data = new FormData();
   data.append('file', body['file']);
   data.append('filename', body['filename']);
@@ -54,8 +58,13 @@ export const importCV = body => {
     },
     body: data
     //body: JSON.stringify(body)
+<<<<<<< HEAD
   })
 }
+=======
+  });
+};
+>>>>>>> c490bc0b6541eb52604cde34ae0fb96926f842f9
 
 // const sendUserMessage = async msg => {
 //   let resp = {}
