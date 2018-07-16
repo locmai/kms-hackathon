@@ -44,9 +44,9 @@ export const getJobsList = async () => {
 
 export const importCV = body => {
   console.log('hihi', body);
-  console.log('post cv', body['file']);
-  console.log('post cv', body['filecheck']);
-  console.log('post cv', body['filename']);
+  console.log('post file', body['file']);
+  console.log('post filecheck', body['filecheck']);
+  console.log('post filename', body['filename']);
   const data = new FormData();
   data.append('file', body['file']);
   data.append('filecheck', body['filecheck']);
@@ -57,7 +57,7 @@ export const importCV = body => {
     headers: {
       'Content-Type': 'application/json'
     },
-    //body: data
-    body: JSON.stringify(body)
+    body: data
+    //body: JSON.stringify(body)
   });
 };
