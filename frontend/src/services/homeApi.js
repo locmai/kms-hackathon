@@ -47,7 +47,7 @@ export const importCV = body => {
   console.log('post file', body['file']);
   console.log('post filecheck', body['filecheck']);
   console.log('post filename', body['filename']);
-  const data = new FormData();
+  let data = new FormData();
   data.append('file', body['file']);
   data.append('filecheck', body['filecheck']);
   data.append('filename', body['filename']);
