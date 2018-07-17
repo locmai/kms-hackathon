@@ -21,6 +21,8 @@ const chatboxReducers = handleActions(
     [importCV.done]: (state, action) => {
       return {
         ...initState,
+	messages: [...state.messages, action.payload],
+	isLoadingMessages: false,
       }
     },
     [getAllQuestions]: (state, action) => {

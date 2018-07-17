@@ -7,24 +7,18 @@ from database.mongo_helpers import get_doc_by_id
 from model.utils import infer, extract_feature
 from model.pdf2text import pdf_to_text
 from model.fastText_predict import predict_field_jd
-
+from flask import request
 UPLOAD_FOLDER = 'resources'
 
 parser = reqparse.RequestParser()
 parser.add_argument('file', type=FileStorage, location='files')
-parser.add_argument('filecheck', type=FileStorage, location='files')
 
 
 class CVUpload(Resource):
     decorators = []
 
     def post(self):
-        print(parser)
-        print("debug check file")
-        print(request.files)
-        request.get_json(force=True)
         data = parser.parse_args()
-        print(data)
         print("==============")
         if data['file'] == "":
             return {
@@ -46,7 +40,7 @@ class CVUpload(Resource):
 #                    f.write(resume_text)
                 # vec = extract_feature(resume_txt_path)
                 fields, jd_id = predict_field_jd(resume_text)
-                return get_doc_by_id(fields)
+                return get_doc_by_id(jd_id)
             return {
                 'code': '500',
                 'message': 'Something when wrong',

@@ -38,9 +38,10 @@ def retrieval_jd(text,fields):
     return best_jd[:5]
 
 def predict_field_jd(text):
+    text = text.replace("\n"," ")    
     fields = predict_field(text)
     jd_idx = retrieval_jd(text,fields)
-
+    
     return fields,jd_idx
 
 # s = 'Em '
