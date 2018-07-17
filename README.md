@@ -3,7 +3,16 @@
 
 ## Introduction
 
+### Vision Statement
 For unemployed people with low-level skills, the EASY product is a job search consultant that not only connects employers with those who are qualified for the jobs but also helps the unemployed explore their potentials. Unlike online application tracking systems which require domain-specific knowledge and resume writing skill, our product’s focus is to provide a simple but effective UI that brings a better UX to all users, making the application process fast and convenient.
+
+### Features
+
+We provide Job Recommendation based on the needs of the users, they can do one of the following action to get the job recommendation from our system:
+
+* Do a quick survey quick our Chat Bot
+* Update CV to our system, we support CV Parsing feature and evaluate to give the best recommendation
+* Describe yourself to our bot and we will provide the best jobs for you based on your profile
 
 ## Setup
 
@@ -69,8 +78,9 @@ yarn start
 
 We used Flask for fast prototyping the RESTful API server so the Front-end application can communicate to and as a connection between the logic handlers with the UI. The logic handlers (powered by various ML models to handle both users' messages and CV sent from the users) were written in Python, so we could leverage that and the integration process was really fast. 
 
-### Machine Learning Techniques
+### Machine Learning Techniques applied
 
-Text Classification: State-of-the-art Text Classification based on sub-word feature, supporting Vietnamese.
-Text Clustering: Kmean cluster- unsupervised learning algorithm- is not required any annotations. Thus, the system could be improved significantly by adding more training data. The authors took advantage of the binary decision tree to give pieces of advice for the job seeker
+* Text Classification: State-of-the-art Text Classification based on sub-word feature, supporting Vietnamese.
+* Text Clustering: Kmean cluster- unsupervised learning algorithm- is not required any annotations. Thus, the system could be improved significantly by adding more training data. 
+* We also took advantage of the binary decision tree to give pieces of advice for the job seeker.
 
